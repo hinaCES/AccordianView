@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:customControl="clr-namespace:AccordianView.CustomControl;assembly=AccordianView"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="AccordianView.Views.MainPage"
+             Title="MainPage">
+
+    <ListView x:Name="list"  HasUnevenRows="True">
+        <ListView.ItemTemplate >
+            <DataTemplate>
+                <customControl:AccordionCell>
+                    <customControl:AccordionCell.Header>
+                        <StackLayout  BackgroundColor="#3498db">
+                            <Label Text="{Binding Name}" TextColor="White" Margin="10" FontAttributes="Bold"></Label>
+                        </StackLayout>
+                    </customControl:AccordionCell.Header>
+                    <customControl:AccordionCell.Detail>
+                        <StackLayout Padding="10" Orientation="Vertical">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Grid.Row="0" Text="Age" TextColor="#34495e" FontAttributes="Bold"></Label>
+                                <Label Grid.Column="1" Grid.Row="0" Text="{Binding Age}" TextColor="#2c3e50"  HorizontalOptions="End" HorizontalTextAlignment="End"></Label>
+                                <Label Grid.Column="0" Grid.Row="1" Text="Number" TextColor="#34495e" FontAttributes="Bold"></Label>
+                                <Label Grid.Column="1" Grid.Row="1" Text="{Binding Number}" TextColor="#2c3e50" HorizontalOptions="End" HorizontalTextAlignment="End"></Label>
+                            </Grid>
+                        </StackLayout>
+                    </customControl:AccordionCell.Detail>
+                </customControl:AccordionCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+</ContentPage>
