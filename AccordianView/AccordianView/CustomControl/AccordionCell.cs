@@ -1,5 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace AccordianView.CustomControl
 {
@@ -46,31 +45,14 @@ namespace AccordianView.CustomControl
 
         private ContentView headerView;
         private ContentView detailView;
-
+        private bool isTapped;
         public AccordionCell()
         {
 
             //Init
             headerView = new ContentView();
-            detailView = new ContentView { IsVisible = true };
 
-            //TapGesture for hiding and showing
-            var tapGesture = new TapGestureRecognizer();
-            tapGesture.Tapped +=   (sender, e) =>
-            {
-                
-                Action<double> callback = input => detailView.Content.HeightRequest = input;
-                double startingHeight = detailView.Content.Height;
-                double endingHeight = -1;
-                uint rate = 16;
-                uint length = 3000;
-                Easing easing = Easing.CubicOut;
-                detailView.Animate("accordion", callback, startingHeight, endingHeight, rate, length, easing);
-
-                this.ForceUpdateSize();
-            };
-            headerView.GestureRecognizers.Add(tapGesture);
-
+            detailView = new ContentView() { IsVisible = false };
             //Setting Cell View
             View = new StackLayout
             {
@@ -80,8 +62,36 @@ namespace AccordianView.CustomControl
                     detailView
                 }
             };
+
+            //TapGesture for hiding and showing
+            var tapGesture = new TapGestureRecognizer();
+
+            tapGesture.Tapped += (sender, e) =>
+            {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    detailView.IsVisible = !detailView.IsVisible;
+                    ForceUpdateSize();
+                });
+            };
+
+            detailView.PropertyChanging += (sender, e) =>
+            {
+                if (e.PropertyName == "IsVisible")
+                {
+                    var detail = (ContentView)sender;
+                    if (detail.IsVisible)
+                    {
+                        detail.Opacity = 0;
+                        detail.FadeTo(1, 5000, Easing.CubicOut);
+                    }
+                }
+
+            };
+
+            headerView.GestureRecognizers.Add(tapGesture);
         }
-       
+
 
     }
 }
