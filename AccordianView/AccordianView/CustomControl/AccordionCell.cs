@@ -45,14 +45,13 @@ namespace AccordianView.CustomControl
 
         private ContentView headerView;
         private ContentView detailView;
-        private bool isTapped;
+
         public AccordionCell()
         {
-
             //Init
             headerView = new ContentView();
 
-            detailView = new ContentView() { IsVisible = false };
+            detailView = new ContentView { IsVisible = false };
             //Setting Cell View
             View = new StackLayout
             {
@@ -86,12 +85,9 @@ namespace AccordianView.CustomControl
                         detail.FadeTo(1, 5000, Easing.CubicOut);
                     }
                 }
-
             };
 
             headerView.GestureRecognizers.Add(tapGesture);
         }
-
-
     }
 }
